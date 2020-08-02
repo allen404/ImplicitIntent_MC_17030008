@@ -21,6 +21,7 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
     Button btnWebsite;
     Button btnLocation;
     Button btnPhoneNumber;
+    Button btnShareText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,8 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
         btnLocation  = findViewById(R.id.btnLocationUri);
         btnLocation.setOnClickListener(this);
 
-        btnWebsite = findViewById(R.id.btnShareText);
-        btnWebsite.setOnClickListener(this);
+        btnShareText = findViewById(R.id.btnShareText);
+        btnShareText.setOnClickListener(this);
 
     }
 
