@@ -29,8 +29,7 @@
         android:background="@color/colorAccent"
         android:text="@string/string_open_nomer"
         android:textSize="@dimen/text_size_14sp"
-        android:textStyle="bold"
-        android:onClick="openDialPhone"/>
+        android:textStyle="bold"/>
     <EditText
         android:id="@+id/edtWebsiteUri"
         android:layout_width="match_parent"

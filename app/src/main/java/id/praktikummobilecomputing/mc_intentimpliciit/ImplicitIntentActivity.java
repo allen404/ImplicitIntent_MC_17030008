@@ -2,7 +2,6 @@ package id.praktikummobilecomputing.mc_intentimpliciit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ShareCompat;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class ImplicitIntentActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -22,7 +20,7 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
 
     Button btnWebsite;
     Button btnLocation;
-    Button btnText;
+    Button btnPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +28,12 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_implicit_intent);
 
         edtDialPhone = findViewById(R.id.edtPhoneNumber);
-
-
-
         websiteUri = findViewById(R.id.edtWebsiteUri);
         locationUri = findViewById(R.id.edtLocationUri);
         textShare = findViewById(R.id.edtShareText);
+
+        btnPhoneNumber = findViewById(R.id.btnPhoneNumber);
+        btnPhoneNumber.setOnClickListener(this);
 
         btnWebsite = findViewById(R.id.btnWebsiteUri);
         btnWebsite.setOnClickListener(this);
@@ -48,23 +46,21 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
 
     }
 
-    public void openDialPhone (View view)
-    {
-        if(TextUtils.isEmpty(edtDialPhone.getText().toString())){
-            Toast.makeText(this, "Tolong Masukkan Nomor Telepon",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Intent dialPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: "+ edtDialPhone.getText().toString()));
-        startActivity(dialPhone);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btnPhoneNumber:
+                if(TextUtils.isEmpty(edtDialPhone.getText().toString())){
+                    edtDialPhone.setError("Tolong masukkan nomor telepon");
+                    return;
+                }
+                Intent dialPhone = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: "+ edtDialPhone.getText().toString()));
+                startActivity(dialPhone);
+                break;
+
             case R.id.btnWebsiteUri:
                 if(TextUtils.isEmpty(websiteUri.getText().toString())){
-                    Toast.makeText(this, "Tolong Masukkan Alamat Website",Toast.LENGTH_SHORT).show();
+                    websiteUri.setError("Tolong masukkan alamat website");
                     return;
                 }
                 Intent openWebsite = new Intent (Intent.ACTION_VIEW).setData(Uri.parse("https://" + websiteUri.getText().toString()));
@@ -73,7 +69,7 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
 
             case R.id.btnLocationUri:
                 if(TextUtils.isEmpty(locationUri.getText().toString())){
-                    Toast.makeText(this, "Tolong Masukkan Alamat Kota/Provinsi/Negara",Toast.LENGTH_SHORT).show();
+                    locationUri.setError("Tolong masukkan alamat kota/provinsi/negara");
                     return;
                 }
                 Intent openLocation = new Intent(Intent.ACTION_VIEW,Uri.parse("geo:0,0?q=" + locationUri.getText().toString()));
@@ -82,7 +78,7 @@ public class ImplicitIntentActivity extends AppCompatActivity implements View.On
 
             case R.id.btnShareText:
                 if(TextUtils.isEmpty(textShare.getText().toString())){
-                    Toast.makeText(this, "Tolong Masukkan Kata/Kalimat",Toast.LENGTH_SHORT).show();
+                    textShare.setError("Tolong masukkan kata/kalimat");
                     return;
                 }
                 ShareCompat.IntentBuilder
